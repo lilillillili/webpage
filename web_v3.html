@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | @lilillillili</title>
+    <style>
+        /* 폰트 및 기본 설정 */
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+        
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'nanumsquare'; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f7fcfb; /* 베이스 배경 */
+            color: #333;
+        }
+
+        /* 옅은 민트 세로 스트라이프 배경 패턴 */
+        .stripe-bg {
+            background: repeating-linear-gradient(
+                to right,
+                #e6f7f5,      /* 줄무늬 색상 */
+                #e6f7f5 12px, /* 줄무늬 두께 */
+                #ffffff 12px,
+                #ffffff 24px  /* 줄무늬 간격 */
+            );
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 2px solid #e0f2f1;
+        }
+
+        header h1 { font-size: 42px; font-weight: 800; color: #2d5a54; margin: 0; }
+        header p { font-size: 18px; color: #666; margin-top: 15px; }
+
+        /* 헤더 버튼 스타일 */
+        .header-btn-wrap {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 버튼 사이 간격 */
+        }
+
+        .header-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #48c9b0;
+            border: 2px solid #48c9b0;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header-btn:hover {
+            background-color: #48c9b0;
+            color: #ffffff;
+        }
+        
+        /* 메인 컨테이너 (3개 배치를 위해 폭을 조금 넓힘) */
+        .container { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+
+        /* 섹션 주제목 */
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #2d5a54;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: #48c0c9;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        /* 프로젝트 그리드 (3개 배치) */
+        .project-grid { display: flex; flex-wrap: wrap; gap: 25px; justify-content: flex-start; }
+        
+        .card { 
+            width: calc(33.333% - 17px); /* 한 줄에 3개 배치 */
+            background: #fff; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e0f2f1;
+            transition: transform 0.3s ease;
+            margin-bottom: 15px;
+
+            /* [추가] 모서리 렌더링을 더 부드럽게 */
+            backface-visibility: hidden;
+            -webkit-mask-image: -webkit-radial-gradient(white, black); 
+
+        }
+        
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+
+        /* 이미지 영역 */
+        .img_wrap { width: 100%; height: 180px; background: #e0f2f1; overflow: hidden; border: 1px solid #2d5a54;
+            border-top-left-radius: 12px; border-top-right-radius: 12px; /* [추가] 카드와 똑같은 곡률을 상단 양쪽에만 직접 적용 */ }
+        .img_wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-body { padding: 20px; text-align: left; }
+        .card-body h3 { font-size: 20px; color: #2d5a54; margin: 0 0 12px 0; }
+        .card-body p { font-size: 14px; line-height: 1.6; color: #666; margin-bottom: 15px; height: 68px; overflow: hidden; }
+        
+        /* 태그 스타일 */
+        .tags span { 
+            background: #e6f7f5; 
+            color: #2d5a54; 
+            padding: 4px 10px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            margin-right: 4px; 
+        }
+
+        /* 프로젝트 내부 버튼 스타일 */
+        .btn { 
+            display: inline-block; /* 한 줄 전체 차지하지 않도록 변경 */
+            margin-top: 15px; 
+            background: #333; /* 검정색으로 변경 */
+            color: #fff; 
+            padding: 6px 15px; /* 크기 축소 */
+            border-radius: 4px; 
+            border: 1px solid #333; /* 버튼 테두리 추가 */
+            text-decoration: none; 
+            font-weight: 600; /* 너무 무겁지 않게 조정 */
+            text-align: center;
+            font-size: 13px; /* 폰트 크기 살짝 축소 */
+            transition: background 0.3s;
+        }
+        .btn:hover { background: #3cb39a; }
+
+        /* 반응형 설정 */
+        @media (max-width: 1000px) {
+            .card { width: calc(50% - 13px); } /* 태블릿: 2개 배치 */
+        }
+
+        @media (max-width: 650px) {
+            header h1 { font-size: 30px; }
+            .header-btn-wrap { flex-direction: column; align-items: center; gap: 10px; } /* 모바일에서는 버튼 세로 배치 */
+            .header-btn { width: 80%; } /* 모바일 버튼 너비 고정 */
+            .card { width: 100%; } /* 모바일: 1개 배치 */
+            .section-title { font-size: 26px; }
+        }
+
+        footer { text-align: center; padding: 60px 0; color: #999; font-size: 14px; border-top: 1px solid #eee; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <header class="stripe-bg">
+        <h1>안녕하세요!</h1>
+        <p>하시는 업무에 조금이나마 도움드리길 바라며 만든 <strong>깃헙 소개페이지</strong>입니다.</p>
+        <div class="header-btn-wrap">
+            <a href="https://github.com/lilillillili" target="_blank" class="header-btn">GitHub 바로가기</a>
+            <a href="javascript:void(0);" onclick="copyEmail()" class="header-btn">이메일 복사하기</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">News Letter 제작 자동화</h2>
+        
+        <div class="project-grid">
+            
+            <div class="card">
+                <div class="img_wrap"><img src="images/ntis.png"></div>
+                <div class="card-body">
+                    <h3>NTIS 국가R&D통합공고</h3>
+                    <p>ntis.go.kr 사이트에서 원하는 부처의 <br>국가R&D통합공고를 검색, 7일 이상 마감이 남은 <br>본공고의 제목, 링크 등을 표로 출력</p>
+                    <div class="tags"><span>HTML/CSS</span><span>Selenium</span></div>
+                    <a href="https://github.com/lilillillili/news-letters/tree/main/ntis" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img_wrap"><img src="images/keyword_news.png"></div>
+                <div class="card-body">
+                    <h3>주제별 뉴스 수집</h3>
+                    <p>원하는 기간 동안 원하는 주제별 뉴스를 검색해서 기사 제목, 날짜, 언론사, 링크를 html 표로 출력<br>(시작~종료날짜 입력)</p>
+                    <div class="tags"><span>Python</span><span>HTML/CSS</span></div>
+                    <a href="https://github.com/lilillillili/news-letters/tree/main/keyword_news" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img_wrap"><img src="images/member_search.png"></div>
+                <div class="card-body">
+                    <h3>엑셀 內 기업 검색</h3>
+                    <p>memberlist 엑셀 파일 C열 '회원사명' 목록의 <br>기업을 확인, 해당 기업의 뉴스를 검색해서 <br>html 표로 출력 (시작~종료날짜 입력)</p>
+                    <div class="tags"><span>EXCEL</span><span>HTML/CSS</span><span>Python</span></div>
+                    <a href="https://github.com/lilillillili/news-letters/tree/main/member_search" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img_wrap"><img src="images/newscaptor.png"></div>
+                <div class="card-body">
+                    <h3>뉴스 정보 엑셀화</h3>
+                    <p>메모장에 쉼표(,)로 구분된 뉴스 정보를 엑셀 파일로 변환</p>
+                    <div class="tags"><span>Excel</span><span>Python</span></div>
+                    <a href="https://github.com/lilillillili/news-letters/tree/main/news_captor" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img_wrap"><img src="images/mapsmaker_v1.png"></div>
+                <div class="card-body">
+                    <h3>회원사 지도 만들기</h3>
+                    <p>회원사 목록 엑셀에서 회원사 홈페이지와 주소 검색, 출력된 결과 엑셀로 HTML 지도 출력 <br>(구글 API키 필요)</p>
+                    <div class="tags"><span>Excel</span><span>Python</span><span>HTML/CSS</span></div>
+                    <a href="https://github.com/lilillillili/maps-maker" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">심사 평가 문서화</h2>
+
+        <div class="project-grid">
+        
+            <div class="card">
+                <div class="img_wrap"><img src="images/evalu_online.png"></div>
+                <div class="card-body">
+                    <h3>온라인 서면 평가자료 제작</h3>
+                    <p>평가자료 구글 링크를 일괄 다운로드하여 팀명 추출, 심사표 템플릿 엑셀파일의 팀명과 매치하여 <br>F열에 링크 자동 삽입</p>
+                    <div class="tags"><span>Python</span><span>Excel</span></div>
+                    <a href="https://github.com/lilillillili/contest/tree/main/evaluation_online" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="img_wrap"><img src="images/evalu_offline.png"></div>
+                <div class="card-body">
+                    <h3>오프라인 평가 결과취합 웹페이지</h3>
+                    <p>각 심사위원들의 평가 점수를 웹페이지 및 <br>모바일에서 입력하여 구글 spread sheet로 취합 <br>(각 평가항목별 최대점수, 총점 자동 계산)<br></p>
+                    <div class="tags"><span>Python</span><span>Selenium</span><span>Google Apps Script</span></div>
+                    <a href="https://github.com/lilillillili/contest/tree/main/evaluation_offline" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">오프라인 행사 준비</h2>
+
+        <div class="project-grid">
+        
+            <div class="card">
+                <div class="img_wrap"><img src="images/bingo.png"></div>
+                <div class="card-body">
+                    <h3>5*5 랜덤 키워드 빙고판 제작</h3>
+                    <p>키워드가 저장된 엑셀에서 25개 키워드 랜덤 추출, 5*5 빙고판 PPT 템플릿에 랜덤 배치 <br>(슬라이드 50장 이상 출력가능)</p>
+                    <div class="tags"><span>Python</span><span>Excel</span></div>
+                    <a href="https://github.com/lilillillili/events/tree/main/bingo" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="img_wrap"><img src="images/nametag.png"></div>
+                <div class="card-body">
+                    <h3>명찰(8.5cm x 5.75cm) 제작</h3>
+                    <p>엑셀에서 소속, 성함, 직함을 가져와 배경 이미지(8.5*5.75cm) 위로 PPT에 명찰 배치(3*3), <br>A4용지 사이즈로 PPT 결과물 출력</p>
+                    <div class="tags"><span>Python</span><span>Excel</span><span>PPT</span></div>
+                    <a href="https://github.com/lilillillili/events/tree/main/nametag" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="img_wrap"><img src="images/nameplates.png"></div>
+                <div class="card-body">
+                    <h3>명패(폼텍 3107) 제작</h3>
+                    <p>엑셀에서 소속, 성함, 직함을 가져와서 <br>폼텍 3107 양식에 맞춰 배치, Word 파일로 출력 </p>
+                    <div class="tags"><span>Python</span><span>Excel</span><span>Word</span></div>
+                    <a href="https://github.com/lilillillili/events/tree/main/nameplates" target="_blank" class="btn">View Repo</a>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+
+    <footer>
+        &copy; 2026 lilillillili. All Rights Reserved. <br>
+        본 페이지는 GitHub Pages를 통해 배포되었습니다 <br>
+        ⸜( * . ̫. )⸝❤⸜( . ̫. * )⸝
+    </footer>
+
+    <script>
+        function copyEmail() {
+            const email = 'dogflychoi@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                alert('이메일 주소가 복사되었습니다!\n' + email);
+            }).catch(err => {
+                alert('복사 실패! 이메일: ' + email);
+            });
+        }
+    </script>
+
+</body>
+</html>
